@@ -1,0 +1,106 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const benefits = [
+  { icon: 'lightning-bolt', title: 'Odborní elektrikáři', description: 'Náš tým certifikovaných profesionálů zajišťuje elektrické práce nejvyšší kvality.' },
+  { icon: 'solar-panel', title: 'Solární řešení', description: 'Využijte sílu slunce s našimi špičkovými solárními instalacemi.' },
+  { icon: 'home-lightning-bolt', title: 'Energetická účinnost', description: 'Pomáháme vám šetřit peníze a snížit vaši uhlíkovou stopu.' },
+];
+
+const testimonials = [
+  { name: 'Jan Novák', comment: 'ElectriSolar odvedl skvělou práci při instalaci našeho domácího solárního systému. Vřele doporučuji!' },
+  { name: 'Jana Svobodová', comment: 'Profesionální, dochvilní a znalí. Rychle vyřešili naše elektrické problémy.' },
+  { name: 'Michal Dvořák', comment: 'Skvělý servis! Naše účty za energii se od přechodu na solární energii výrazně snížily.' },
+];
+---
+
+<Layout title="ElectriSolar - Elektrikářské a solární instalační služby">
+  <section class="relative h-[600px] mb-12">
+    <img 
+      src="/images/homepagesxpr.jpg" 
+      alt="Solární panely" 
+      class="absolute inset-0 w-full h-full object-cover brightness-75"
+    >
+    <div class="absolute inset-0 bg-gradient-to-r from-blue-900/70 to-transparent">
+      <div class="container mx-auto h-full flex items-center">
+        <div class="max-w-2xl text-white p-8">
+          <h1 class="text-5xl font-bold mb-6">Vítejte u ElectriSolar</h1>
+          <p class="text-xl mb-8">Váš důvěryhodný partner pro elektrikářské služby a instalace solárních panelů. Přinášíme energii do vašeho života, udržitelně.</p>
+          <a 
+            href="/contact" 
+            class="bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 transition-colors inline-block"
+          >
+            Získejte bezplatnou nabídku
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 px-4 bg-gradient-to-r from-blue-500 to-blue-700">
+    <div class="container mx-auto">
+      <h2 class="text-3xl font-bold mb-8 text-center text-white">Naše služby</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="bg-white p-6 rounded-lg shadow-md">
+          <h3 class="text-2xl font-semibold mb-4 text-blue-600">Elektrikářské služby</h3>
+          <ul class="list-disc list-inside text-gray-700">
+            <li>Domovní elektroinstalace</li>
+            <li>Komerční elektrické instalace</li>
+            <li>Opravy a údržba elektroinstalací</li>
+            <li>Instalace osvětlení</li>
+          </ul>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-md">
+          <h3 class="text-2xl font-semibold mb-4 text-blue-600">Instalace solárních panelů</h3>
+          <ul class="list-disc list-inside text-gray-700">
+            <li>Domácí solární systémy</li>
+            <li>Komerční solární instalace</li>
+            <li>Údržba solárních panelů</li>
+            <li>Konzultace energetické účinnosti</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 px-4">
+    <div class="container mx-auto">
+      <h2 class="text-3xl font-bold mb-12 text-center text-blue-800">Proč si vybrat nás</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {benefits.map(benefit => (
+          <div class="text-center">
+            <div class="bg-blue-500 text-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+              <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-semibold mb-2 text-blue-700">{benefit.title}</h3>
+            <p class="text-gray-600">{benefit.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 px-4">
+    <div class="container mx-auto">
+      <h2 class="text-3xl font-bold mb-12 text-center text-blue-800">Co říkají naši zákazníci</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {testimonials.map(testimonial => (
+          <div class="bg-white p-6 rounded-lg shadow-md">
+            <p class="mb-4 italic text-gray-600">"{testimonial.comment}"</p>
+            <p class="font-semibold text-blue-600">- {testimonial.name}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 px-4 bg-gradient-to-r from-blue-500 to-blue-700 text-white rounded-lg">
+    <div class="container mx-auto text-center">
+      <h2 class="text-3xl font-bold mb-6">Připraveni napájet svou budoucnost?</h2>
+      <p class="text-xl mb-8">Kontaktujte nás ještě dnes pro bezplatnou konzultaci a nabídku.</p>
+      <a href="/contact" class="bg-white text-blue-600 px-6 py-3 rounded-lg text-lg font-semibold hover:bg-gray-100 transition-colors inline-block">Kontaktujte nás</a>
+    </div>
+  </section>
+</Layout>
