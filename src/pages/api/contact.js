@@ -1,6 +1,3 @@
-import db from '../../lib/db.js';
-import { sendContactEmail } from '../../lib/email.js';
-
 export async function post({ request }) {
   try {
     const formData = await request.formData();
@@ -8,12 +5,18 @@ export async function post({ request }) {
     const email = formData.get('email');
     const message = formData.get('message');
 
-    // Insert into SQLite database
-    const stmt = db.prepare('INSERT INTO contact_submissions (name, email, message) VALUES (?, ?, ?)');
-    const result = stmt.run(name, email, message);
+    // Call Netlify Function to send email
+    const response = await fetch('/api/contact', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ name, email, message })
+    });
 
-    // Send email notification
-    await sendContactEmail({ name, email, message });
+    if (!response.ok) {
+      throw new Error(`Failed to send email: ${response.status}`);
+    }
 
     return new Response(JSON.stringify({
       message: "Děkujeme za vaši zprávu. Brzy se vám ozveme!"
