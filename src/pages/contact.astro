@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+
 ---
 
 <Layout title="Kontaktujte nás - ElectriSolar">
@@ -25,17 +26,10 @@ import Layout from '../layouts/Layout.astro';
       <form 
         name="contact"
         method="POST"
-        data-netlify="true"
-        netlify-honeypot="bot-field"
+        action="/api/contact"
         class="space-y-4"
       >
-        <p class="hidden">
-          <label>
-            Don't fill this out if you're human: <input name="bot-field" />
-          </label>
-        </p>
-        <div>
-          <label for="name" class="block text-sm font-medium text-gray-700">Jméno</label>
+        <label for="name" class="block text-sm font-medium text-gray-700">Jméno</label>
           <input 
             type="text" 
             id="name" 

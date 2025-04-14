@@ -1,44 +1,41 @@
-import { createClient } from 'npm:@supabase/supabase-js@2.39.0'
-import { Resend } from 'npm:resend@2.0.0'
+import { Resend } from 'resend';
 
-const resend = new Resend(Deno.env.get('RESEND_API_KEY'));
+export const config = {
+  path: "/api/contact",
+};
 
-const supabase = createClient(
-  Deno.env.get('SUPABASE_URL') ?? '',
-  Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
-);
+export default async function handler(req, res) {
+  if (req.method === "POST") {
+    const { name, email, message } = req.body;
 
-Deno.serve(async (req) => {
-  try {
-    const { record } = await req.json();
+    const resend = new Resend(process.env.RESEND_API_KEY);
 
-    // Send email
-    await resend.emails.send({
-      from: 'noreply@yourdomain.com',
-      to: 'your-email@example.com', // Replace with your email
-      subject: 'New Contact Form Submission',
-      html: `
-        <h2>New Contact Form Submission</h2>
-        <p><strong>Name:</strong> ${record.name}</p>
-        <p><strong>Email:</strong> ${record.email}</p>
-        <p><strong>Message:</strong> ${record.message}</p>
-      `
+    try {
+      const data = await resend.emails.send({
+        from: 'Acme <onboarding@resend.dev>',
+        to: ['delivered@resend.dev'],
+        subject: 'Contact Form Submission',
+        html: `
+          <p>Name: ${name}</p>
+          <p>Email: ${email}</p>
+          <p>Message: ${message}</p>
+        `,
+      });
+
+      return new Response(JSON.stringify({ message: "Email sent successfully!" }), {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      });
+    } catch (error) {
+      return new Response(JSON.stringify({ error: error.message }), {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+  } else {
+    return new Response(JSON.stringify({ message: "Method not allowed" }), {
+      status: 405,
+      headers: { "Content-Type": "application/json" },
     });
-
-    // Update submission status
-    await supabase
-      .from('contact_submissions')
-      .update({ status: 'sent' })
-      .eq('id', record.id);
-
-    return new Response(
-      JSON.stringify({ message: 'Email sent successfully' }),
-      { headers: { 'Content-Type': 'application/json' } }
-    );
-  } catch (error) {
-    return new Response(
-      JSON.stringify({ error: error.message }),
-      { status: 500, headers: { 'Content-Type': 'application/json' } }
-    );
   }
-});
+}
